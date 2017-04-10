@@ -1,0 +1,13 @@
+{
+    "name": "dark_diesel/php-knack-rest-client",
+    "description": "Knack REST API Client for PHP Users.",
+    "type": "library",
+    "license": "GPL2",
+    "authors": [
+        {
+            "name": "Igor Peshkov",
+            "email": "igor.peshkov@gmail.com"
+        }
+    ],
+    "require": {}
+}
