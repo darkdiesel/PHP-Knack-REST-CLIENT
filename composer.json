@@ -9,5 +9,13 @@
             "email": "igor.peshkov@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "php": ">=5.4.0",
+        "monolog/monolog": "~1.12"
+    },
+    "autoload": {
+        "psr-4" : {
+            "KnackRestApi\\" : "src"
+        }
+    }
 }
