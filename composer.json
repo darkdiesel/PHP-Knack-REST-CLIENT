@@ -1,5 +1,5 @@
 {
-    "name": "dark_diesel/php-knack-rest-client",
+    "name": "darkdiesel/php-knack-rest-client",
     "description": "Knack REST API Client for PHP Users.",
     "type": "library",
     "license": "GPL2",
