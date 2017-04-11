@@ -16,6 +16,10 @@ class RecordService extends KnackClient
      */
     public function getAllObjectRecords($objId, $data = null)
     {
+        if (is_array($data) && isset($data['filters'])){
+            $data['filters'] = json_encode($data['filters']);
+        }
+
         $ret = $this->exec("objects/object_$objId/records", $data);
 
         $rkrds = json_decode($ret);
@@ -34,6 +38,24 @@ class RecordService extends KnackClient
     public function getObjectRecord($objId, $rkrdId)
     {
         $ret = $this->exec("objects/object_$objId/records/$rkrdId", null);
+
+        $rkrds = json_decode($ret);
+
+        return $rkrds;
+    }
+
+    /**
+     * @param integer $objId id of Knack object
+     * @param array $data post data params
+     *
+     * Create new record for object.
+     *
+     * @return array of Std class
+     */
+    public function createObjectRecord($objId, $data){
+        $data = json_encode($data);
+
+        $ret = $this->exec("objects/object_$objId/records", $data, 'POST');
 
         $rkrds = json_decode($ret);
 

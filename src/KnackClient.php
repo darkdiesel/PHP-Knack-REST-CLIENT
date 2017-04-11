@@ -76,7 +76,7 @@ class KnackClient
     /**
      * Execute REST request.
      *
-     * @param string $context        Rest API context (ex.:issue, search, etc..)
+     * @param string $context Rest API context (ex.:issue, search, etc..)
      * @param string|array $data
      * @param string $custom_request [PUT|DELETE]
      *
@@ -94,7 +94,7 @@ class KnackClient
         if (is_array($data)) {
             if (count($data) > 0) {
                 foreach ($data as $key => $value) {
-                    $data_str .= "{$key}=".urlencode($value)."&";
+                    $data_str .= "{$key}=" . urlencode($value) . "&";
                 }
                 $data_str = rtrim($data_str, '&');
             }
@@ -104,25 +104,25 @@ class KnackClient
             array_push($headers, "Content-Type: application/json");
         }
 
-        $this->log->addDebug("Curl $url Data=".$data_str);
+        $this->log->addDebug("Curl $url Data=" . $data_str);
 
         $ch = curl_init();
 
         // post_data
         if (!is_null($data)) {
-            // PUT REQUEST
-            if (!is_null($custom_request) && $custom_request == 'PUT') {
+            if (!is_null($custom_request) && $custom_request == 'POST') {
+                curl_setopt($ch, CURLOPT_URL, $url);
+                curl_setopt($ch, CURLOPT_POST, true);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $data_str);
+            }
+            else if (!is_null($custom_request) && $custom_request == 'PUT') {
                 curl_setopt($ch, CURLOPT_URL, $url);
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $data_str);
             }
-            if (!is_null($custom_request) && $custom_request == 'DELETE') {
+            else if (!is_null($custom_request) && $custom_request == 'DELETE') {
                 curl_setopt($ch, CURLOPT_URL, "{$url}?{$data_str}");
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
-            }
-            if (!is_null($custom_request) && $custom_request == 'POST') {
-                curl_setopt($ch, CURLOPT_POST, true);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
             } else {
                 curl_setopt($ch, CURLOPT_URL, "{$url}?{$data_str}");
             }
@@ -144,7 +144,7 @@ class KnackClient
 
         curl_setopt($ch, CURLOPT_VERBOSE, $this->getConfiguration()->isCurlOptVerbose());
 
-        $this->log->addDebug('Curl exec='.$url);
+        $this->log->addDebug('Curl exec=' . $url);
 
         $response = curl_exec($ch);
 
@@ -173,8 +173,8 @@ class KnackClient
             // don't check 301, 302 because setting CURLOPT_FOLLOWLOCATION
             if ($this->http_response != 200 && $this->http_response != 201) {
                 throw new KnackException('CURL HTTP Request Failed: Status Code : '
-                    .$this->http_response.', URL:'.$url
-                    ."\nError Message : ".$response, $this->http_response);
+                    . $this->http_response . ', URL:' . $url
+                    . "\nError Message : " . $response, $this->http_response);
             }
         }
 
@@ -192,7 +192,7 @@ class KnackClient
     {
         $api_url = $this->getConfiguration()->getKnackApiUrl();
 
-        return $api_url.'/'.preg_replace('/(\/+)/','/',$context, 1);
+        return $api_url . '/' . preg_replace('/(\/+)/', '/', $context, 1);
     }
 
     /**
