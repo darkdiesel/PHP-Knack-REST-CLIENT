@@ -80,4 +80,20 @@ class RecordService extends KnackClient
 
         return $rkrds;
     }
+
+    /**
+     * @param integer $objId id of Knack object
+     * @param integer $rkrdId id of Knack record for $objId object
+     *
+     * Delete record for object.
+     *
+     * @return array of Std class
+     */
+    public function deleteObjectRecord($objId, $rkrdId){
+        $ret = $this->exec("objects/object_$objId/records/{$rkrdId}", array(), 'DELETE');
+
+        $rkrds = json_decode($ret);
+
+        return $rkrds;
+    }
 }
