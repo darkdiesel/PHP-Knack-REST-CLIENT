@@ -93,7 +93,7 @@ abstract class AbstractConfiguration implements ConfigurationInterface
      *
      * @return string
      */
-    public function getKnackUrl()
+    public function getKnackApiUrl()
     {
         return "{$this->knackHost}/v{$this->knackApiVersion}";
     }

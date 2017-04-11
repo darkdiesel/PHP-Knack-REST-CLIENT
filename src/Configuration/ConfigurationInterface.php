@@ -26,7 +26,7 @@ interface ConfigurationInterface
      *
      * @return string
      */
-    public function getKnackUrl();
+    public function getKnackApiUrl();
 
     /**
      * Knack Application ID.
